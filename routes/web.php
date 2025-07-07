@@ -1,16 +1,19 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\UserDashboardController;
-use App\Http\Controllers\Admin\UserController; // Import controller user
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminController;
 
 // Halaman Pilihan Utama (Login Saja)
+// Halaman utama mengarah ke halaman login
 Route::get('/', function () {
-    return view('admin.landing');
-})->name('landing');
-
+    return redirect()->route('login');
+});
 
 // --- GRUP AUTENTIKASI ---
 // Rute untuk login & logout
@@ -22,7 +25,7 @@ Route::post('/logout', function (Request $request) {
     Auth::guard('web')->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
-    return redirect('/');
+    return redirect('/login');
 })->name('logout');
 
 // Logout untuk admin
@@ -35,18 +38,9 @@ Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('adm
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     
-    // Rute untuk kelola user oleh admin (Create, Read)
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    // Anda bisa menambahkan rute edit & delete di sini jika perlu
-
-    // == TAMBAHKAN RUTE INI ==
-    // Rute untuk kelola admin oleh admin
-    Route::get('/admins', [AdminController::class, 'index'])->name('admins.index');
-    Route::get('/admins/create', [AdminController::class, 'create'])->name('admins.create');
-    Route::post('/admins', [AdminController::class, 'store'])->name('admins.store');
-    // ========================
+    // Resource route untuk semua fungsi CRUD User & Admin
+    Route::resource('users', UserController::class);
+    Route::resource('admins', AdminController::class);
 });
 
 // Rute untuk USER
