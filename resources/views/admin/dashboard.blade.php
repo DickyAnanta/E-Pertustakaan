@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
+    <style>body{font-family:sans-serif;padding:2rem}.btn{text-decoration:none;color:white;padding:10px 15px;border-radius:4px;margin-right:10px}.btn-user{background:#17a2b8}.btn-admin{background:#ffc107;color:black}.logout-btn{background:#dc3545;color:white;padding:10px 15px;border:none;border-radius:4px;cursor:pointer}</style>
 </head>
 <body>
     <h1>Selamat Datang di Dashboard Admin!</h1>
