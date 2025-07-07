@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\Admin\AdminController; // Import controller admin
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\Admin\UserController; // Import controller user
@@ -34,7 +37,7 @@ Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('adm
 // Rute untuk ADMIN
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    
+
     // Rute untuk kelola user oleh admin (Create, Read)
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
