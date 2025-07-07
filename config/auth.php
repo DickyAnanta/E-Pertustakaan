@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // TAMBAHKAN INI
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins', // Kita akan buat provider 'admins' di bawah
+        ],
     ],
 
     /*
@@ -69,6 +74,12 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        // TAMBAHKAN INI
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
     ],
 
     /*
